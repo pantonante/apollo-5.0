@@ -332,10 +332,16 @@ function main(){
 
     DOCKER_VERSION=$(docker version --format '{{.Client.Version}}' | cut -d'.' -f1)
 
+    if [[ -z "${APOLLO_GPU_DEVICE}" ]]; then
+        GPU_DEVICE="all"
+    fi
+    DOCKER_GPU_DEVICE="device=$APOLLO_GPU_DEVICE"
+
+
     if [[ $DOCKER_VERSION -ge "19" ]] && ! type nvidia-docker; then
         DOCKER_CMD="docker"
         USE_GPU=1
-        GPUS="--gpus all"
+        GPUS="--gpus \"$DOCKER_GPU_DEVICE\""
     else
         DOCKER_CMD="nvidia-docker"
         USE_GPU=1
@@ -346,7 +352,7 @@ function main(){
 
     ${DOCKER_CMD} run -it \
         -d \
-        --privileged \
+        --cap-add ALL \
         ${GPUS} \
         --name $APOLLO_DEV \
         ${MAP_VOLUME_CONF} \
@@ -359,6 +365,8 @@ function main(){
         -e DOCKER_GRP_ID=$GRP_ID \
         -e DOCKER_IMG=$IMG \
         -e USE_GPU=$USE_GPU \
+        -e NVIDIA_VISIBLE_DEVICES=${APOLLO_GPU_DEVICE} \
+        -e NVIDIA_DRIVER_CAPABILITIES=compute,video,graphics,utility \
         $(local_volumes) \
         --net host \
         -w /apollo \

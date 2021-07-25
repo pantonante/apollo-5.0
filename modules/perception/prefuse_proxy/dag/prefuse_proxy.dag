@@ -1,0 +1,14 @@
+module_config {
+  module_library: "/apollo/bazel-bin/modules/perception/prefuse_proxy/app/libperception_prefuse_proxy.so"
+   
+  components {
+      class_name: "PrefusedProxyComponent"
+      config {
+        name: "PrefusedProxyComponent"
+        readers {
+            channel: "/perception/inner/PrefusedObjects"
+          }
+      }
+    }
+}
+
