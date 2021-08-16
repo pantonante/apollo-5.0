@@ -16,6 +16,7 @@
 #pragma once
 
 #include <string>
+#include <unordered_map>
 
 #include "cyber/common/macros.h"
 #include "modules/perception/radar/lib/interface/base_preprocessor.h"
@@ -39,6 +40,7 @@ class ContiArsPreprocessor : public BasePreprocessor {
 
   inline double GetDelayTime() { return delay_time_; }
 
+
  private:
   void SkipObjects(const drivers::ContiRadar& raw_obstacles,
                    drivers::ContiRadar* corrected_obstacles);
@@ -48,7 +50,7 @@ class ContiArsPreprocessor : public BasePreprocessor {
 
   float delay_time_ = 0.0f;
   static int current_idx_;
-  static int local2global_[ORIGIN_CONTI_MAX_ID_NUM];
+  static std::unordered_map<int, int> local2global_map_;
 
   friend class ContiArsPreprocessorTest;
 

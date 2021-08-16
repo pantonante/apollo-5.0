@@ -167,8 +167,8 @@ class Recorder(object):
         disk_to_use = disks[0]['mountpoint'] if len(disks) > 0 else '/apollo'
 
         # Record small topics to quickly copy and process
-        if record_all:
-            self.record_task(disk_to_use, False)
+        # if record_all:
+        #     self.record_task(disk_to_use, False)
 
         self.record_task(disk_to_use, record_all)
 

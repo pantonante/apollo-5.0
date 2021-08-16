@@ -50,7 +50,7 @@ bool PrefusedProxyComponent::Proc(
       obstacle->set_sub_type(static_cast<PrefusedObstacle_SubType>(object->sub_type));
     }
     writer_->Write(prefused_obstacles);
-    AINFO << "Send lidar detect output message.";
+    // AINFO << "Send lidar detect output message.";
   } else {
     AINFO << "Empty frame" << std::endl;
   }

@@ -311,6 +311,7 @@ function main(){
     else
         display="${DISPLAY}"
     fi
+    info "Using display $display"
 
     if [ "$DEV_START__BUILD_ONLY__LGSVL" != "1" ];then
         setup_device
